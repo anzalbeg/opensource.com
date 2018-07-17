@@ -19,7 +19,7 @@ if [ ! "$(docker images | grep hyperledger/fabric )" ]; then
  docker pull hyperledger/fabric-ca:$FABRIC
  docker pull hyperledger/fabric-ccenv:$FABRIC
  docker pull hyperledger/fabric-orderer:$FABRIC
- docker pull hyperledger/fabric-couchdb:$FABRIC
+ docker pull hyperledger/fabric-couchdb:latest
 fi
 
 if [ ! -d "bin"]; then
