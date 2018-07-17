@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ca
+  name: ca1
   namespace: {{ .Release.Namespace }}
 spec:
   loadBalancerIP: {{ .Values.ingress.addr }}
@@ -12,24 +12,24 @@ spec:
     port: 7054
     protocol: TCP
   selector:
-    service: {{ .Release.Name }}-ca
+    service: {{ .Release.Name }}-ca1
   type: LoadBalancer
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata:
   labels:
-    service: {{ .Release.Name }}-ca
-  name: {{ .Release.Name }}-ca
+    service: {{ .Release.Name }}-ca1
+  name: {{ .Release.Name }}-ca1
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
-    service: {{ .Release.Name }}-ca
+    service: {{ .Release.Name }}-ca1
   template:
     metadata:
       labels:
-        service: {{ .Release.Name }}-ca
+        service: {{ .Release.Name }}-ca1
       namespace: {{ .Release.Namespace }}
     spec:
       hostAliases:
@@ -41,9 +41,9 @@ spec:
         - fabric-ca-server
         - start
         - --ca.certfile
-        - /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg.domain }}/ca/ca.{{ .Values.fabricOrg.domain }}-cert.pem
+        - /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/ca/ca.{{ .Values.fabricOrg1.domain }}-cert.pem
         - --ca.keyfile
-        - /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg.domain }}/ca/{{ .Values.fabricCa.keyStoreHash }}_sk
+        - /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/ca/{{ .Values.fabricCa1.keyStoreHash }}_sk
         - -b
         - admin:adminpw
         - -d
@@ -51,11 +51,11 @@ spec:
         - name: FABRIC_CA_HOME
           value: /etc/hyperledger/fabric-ca-server
         - name: FABRIC_CA_SERVER_CA_NAME
-          value: ca.{{ .Values.fabricOrg.domain }}
+          value: ca1.{{ .Values.fabricOrg1.domain }}
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
-        image: {{ .Values.fabricCa.image }}:{{ .Values.fabricCa.tag }}
-        name: {{ .Release.Name }}-ca
+        image: {{ .Values.fabricCa1.image }}:{{ .Values.fabricCa1.tag }}
+        name: {{ .Release.Name }}-ca1
         ports:
         - containerPort: 7054
         volumeMounts:

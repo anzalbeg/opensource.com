@@ -2,7 +2,7 @@
 
 set -ev
 
-export VERSION=1.0.2
+export VERSION=1.1.1
 export ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
 
 MARCH=`uname -m`
@@ -11,7 +11,8 @@ FABRIC="$MARCH-$VERSION"
 BIN="$ARCH-$VERSION"
 SLEEP_TIMEOUT=10
 
-ORG_DOMAIN="org1.example.com"
+ORG1_DOMAIN="org1.example.com"
+ORG2_DOMAIN="org2.example.com"
 
 if [ ! "$(docker images | grep hyperledger/fabric )" ]; then
  docker pull hyperledger/fabric-peer:$FABRIC
@@ -31,12 +32,21 @@ sleep $SLEEP_TIMEOUT
 
 sleep $SLEEP_TIMEOUT
 
-KEYSTORE=`ls ./crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp/keystore`
+KEYSTORE1=`ls ./crypto-config/peerOrganizations/$ORG1_DOMAIN/users/Admin@$ORG1_DOMAIN/msp/keystore`
 composer identity import \
 -p hlfv1 \
--u Admin@$ORG_DOMAIN \
--c ./crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp/signcerts/Admin@$ORG_DOMAIN-cert.pem \
--k ./crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp/keystore/$KEYSTORE
+-u Admin@$ORG1_DOMAIN \
+-c ./crypto-config/peerOrganizations/$ORG1_DOMAIN/users/Admin@$ORG1_DOMAIN/msp/signcerts/Admin@$ORG1_DOMAIN-cert.pem \
+-k ./crypto-config/peerOrganizations/$ORG1_DOMAIN/users/Admin@$ORG1_DOMAIN/msp/keystore/$KEYSTORE1
+
+sleep $SLEEP_TIMEOUT
+
+KEYSTORE2=`ls ./crypto-config/peerOrganizations/$ORG2_DOMAIN/users/Admin@$ORG2_DOMAIN/msp/keystore`
+composer identity import \
+-p hlfv1 \
+-u Admin@$ORG2_DOMAIN \
+-c ./crypto-config/peerOrganizations/$ORG2_DOMAIN/users/Admin@$ORG2_DOMAIN/msp/signcerts/Admin@$ORG2_DOMAIN-cert.pem \
+-k ./crypto-config/peerOrganizations/$ORG2_DOMAIN/users/Admin@$ORG2_DOMAIN/msp/keystore/$KEYSTORE2
 
 sleep $SLEEP_TIMEOUT
 

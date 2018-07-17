@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: peer0
+  name: peer1
   namespace: {{ .Values.namespace }}
 spec:
   loadBalancerIP: {{ .Values.ingress.addr }}
@@ -15,24 +15,24 @@ spec:
     port: 7053
     protocol: TCP
   selector:
-    service: {{ .Release.Name }}-peer0
+    service: {{ .Release.Name }}-peer1
   type: LoadBalancer
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata:
   labels:
-    service: {{ .Release.Name }}-peer0
-  name: {{ .Release.Name }}-peer0
+    service: {{ .Release.Name }}-peer1
+  name: {{ .Release.Name }}-peer1
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
-    service: {{ .Release.Name }}-peer0
+    service: {{ .Release.Name }}-peer1
   template:
     metadata:
       labels:
-        service: {{ .Release.Name }}-peer0
+        service: {{ .Release.Name }}-peer1
       namespace: {{ .Values.namespace }}
     spec:
       hostAliases:
@@ -51,17 +51,17 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ID
-          value: peer0.{{ .Values.fabricOrg.domain }}
+          value: peer1.{{ .Values.fabricOrg1.domain }}
         - name: CORE_PEER_ADDRESS
           value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg.domain }}/peers/peer0.{{ .Values.fabricOrg.domain }}/msp
+          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
-          value: {{ .Values.fabricOrg.msp }}
+          value: {{ .Values.fabricOrg1.msp }}
         image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}
-        name: {{ .Release.Name }}-peer0
+        name: {{ .Release.Name }}-peer1
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric
         ports:
         - containerPort: 7051
@@ -80,17 +80,17 @@ spec:
           path: /var/run/docker.sock
       - name: {{ .Release.Name }}-fabric
         persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-peer0-pvc
+          claimName: {{ .Release.Name }}-peer1-pvc
       - name: {{ .Release.Name }}-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-peer0-pvc
+  name: {{ .Release.Name }}-peer1-pvc
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Release.Name }}-peer0-pvc
+    app: {{ .Release.Name }}-peer1-pvc
 spec:
   storageClassName: standard
   accessModes:
