@@ -15,16 +15,16 @@ ORG1_DOMAIN="org1.example.com"
 ORG2_DOMAIN="org2.example.com"
 
 if [ ! "$(docker images | grep hyperledger/fabric )" ]; then
- #docker pull hyperledger/fabric-peer:$FABRIC
- #docker pull hyperledger/fabric-ca:$FABRIC
- #docker pull hyperledger/fabric-ccenv:$FABRIC
- #docker pull hyperledger/fabric-orderer:$FABRIC
- #docker pull hyperledger/fabric-couchdb:latest
+ docker pull hyperledger/fabric-peer:$FABRIC
+ docker pull hyperledger/fabric-ca:$FABRIC
+ docker pull hyperledger/fabric-ccenv:$FABRIC
+ docker pull hyperledger/fabric-orderer:$FABRIC
+ docker pull hyperledger/fabric-couchdb:latest
 fi
 
-if [ ! -d "bin"]; then
-    #curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
-fi
+#if [ ! -d "bin"]; then
+#    curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
+#fi
 
 sleep $SLEEP_TIMEOUT
 
