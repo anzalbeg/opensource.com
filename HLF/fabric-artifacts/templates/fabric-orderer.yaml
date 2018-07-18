@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: orderer
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.namespace.orderernamepsace }}
 
 spec:
   loadBalancerIP: {{ .Values.ingress.addr }}
@@ -20,7 +20,7 @@ kind: StatefulSet
 metadata:
   labels:
     service: {{ .Release.Name }}-orderer
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.namespace.orderernamepsace }}
   name: {{ .Release.Name }}-orderer
 spec:
   replicas: {{ .Values.fabricOrderer.replicas }}
@@ -29,7 +29,7 @@ spec:
     metadata:
       labels:
         service: {{ .Release.Name }}-orderer
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ .Values.namespace.orderernamepsace }}
     spec:
       hostAliases:
       - ip: "{{ .Values.fabricOrderer.addr }}"
