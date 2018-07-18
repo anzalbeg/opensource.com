@@ -56,7 +56,7 @@ spec:
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer3.{{ .Values.fabricOrg2.domain }}/msp
+          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer1.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg2.msp }}
         image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}
