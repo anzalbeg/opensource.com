@@ -44,7 +44,6 @@ spec:
         - peer
         - node
         - start
-        - --peer-defaultchain=false
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///var/run/docker.sock
