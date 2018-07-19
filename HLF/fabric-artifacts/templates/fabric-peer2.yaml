@@ -4,9 +4,9 @@ metadata:
   name: peer2
   namespace: {{ .Values.namespace.org2namespace }}
 spec:
-  loadBalancerIP: {{ .Values.ingress.addr }}
-  externalIPs:
-  - {{ .Values.ingress.addr }}
+  #loadBalancerIP: {{ .Values.ingress.addr }}
+  #externalIPs:
+  #- {{ .Values.ingress.addr }}
   ports:
   - name: "requests"
     port: 7051
@@ -52,9 +52,9 @@ spec:
         - name: CORE_PEER_ID
           value: peer2.{{ .Values.fabricOrg2.domain }}
         - name: CORE_PEER_ADDRESS
-          value: {{ .Values.ingress.addr }}:7051
+          value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: {{ .Values.ingress.addr }}:7051
+          value: 0.0.0.0:7051
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID

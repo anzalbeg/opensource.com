@@ -1,0 +1,8 @@
+export POD_ID=`kubectl get pod test-peer1-x2grr --namespace org1namespace | grep peer1 | cut -f1
+ -d' '`
+
+ ubectl get pod test-peer1-x2grr --namespace org1namespace
+
+kubectl exec test-peer1-x2grr --namespace org1namespace -it -- bash
+
+kubectl exec $POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_MSPCONFIGPATH=/etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp && CORE_PEER_ADDRESS=0.0.0.0:7051 peer channel create -o $ORDERER_ADDR:7050 -c mychannel -f $GENESIS_BLOCK"

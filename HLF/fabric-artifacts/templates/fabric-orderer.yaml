@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.namespace.orderernamepsace }}
 
 spec:
-  loadBalancerIP: {{ .Values.ingress.addr }}
-  externalIPs:
-  - {{ .Values.ingress.addr }}
+  #loadBalancerIP: {{ .Values.ingress.addr }}
+  #externalIPs:
+  #- {{ .Values.ingress.addr }}
   ports:
   - port: 7050
     protocol: TCP
@@ -31,10 +31,10 @@ spec:
         service: {{ .Release.Name }}-orderer
       namespace: {{ .Values.namespace.orderernamepsace }}
     spec:
-      hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
-        hostnames:
-        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      #hostAliases:
+      #- ip: "{{ .Values.fabricOrderer.addr }}"
+      #  hostnames:
+      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - orderer

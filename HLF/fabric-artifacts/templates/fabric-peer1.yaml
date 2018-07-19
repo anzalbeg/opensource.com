@@ -4,9 +4,9 @@ metadata:
   name: peer1
   namespace: {{ .Values.namespace.org1namespace }}
 spec:
-  loadBalancerIP: {{ .Values.ingress.addr }}
-  externalIPs:
-  - {{ .Values.ingress.addr }}
+  #loadBalancerIP: {{ .Values.ingress.addr }}
+  #externalIPs:
+  #- {{ .Values.ingress.addr }}
   ports:
   - name: "requests"
     port: 7051
@@ -35,10 +35,10 @@ spec:
         service: {{ .Release.Name }}-peer1
       namespace: {{ .Values.namespace.org1namespace }}
     spec:
-      hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
-        hostnames:
-        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      #hostAliases:
+      #- ip: "{{ .Values.fabricOrderer.addr }}"
+      #  hostnames:
+      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - peer
@@ -52,9 +52,9 @@ spec:
         - name: CORE_PEER_ID
           value: peer1.{{ .Values.fabricOrg1.domain }}
         - name: CORE_PEER_ADDRESS
-          value: {{ .Values.ingress.addr }}:7051
+          value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: {{ .Values.ingress.addr }}:7051
+          value: 0.0.0.0:7051
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
