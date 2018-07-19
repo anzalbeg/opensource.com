@@ -35,10 +35,10 @@ spec:
         service: {{ .Release.Name }}-peer2
       namespace: {{ .Values.namespace.org2namespace }}
     spec:
-      hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
-        hostnames:
-        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      #hostAliases:
+      #- ip: "{{ .Values.fabricOrderer.addr }}"
+      #  hostnames:
+      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - peer
