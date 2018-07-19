@@ -7,13 +7,13 @@ spec:
   #loadBalancerIP: {{ .Values.ingress.addr }}
   #externalIPs:
   #- {{ .Values.ingress.addr }}
-  #ports:
-  #- name: "requests"
-  #  port: 7051
-  #  protocol: TCP
-  #- name: "events"
-  #  port: 7053
-  #  protocol: TCP
+  ports:
+  - name: "requests"
+    port: 7051
+    protocol: TCP
+  - name: "events"
+    port: 7053
+    protocol: TCP
   selector:
     service: {{ .Release.Name }}-cli
   type: LoadBalancer
