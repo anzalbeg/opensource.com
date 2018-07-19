@@ -50,11 +50,11 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ADDRESS
-          value: peer1.{{ .Values.fabricOrg1.domain }}
+          value: peer1.{{ .Values.fabricOrg1.domain }}:7051
         - name: CORE_PEER_ID
           value: cli
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
+          value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg1.msp }}
         image: {{ .Values.fabricCli.image }}:{{ .Values.fabricCli.tag }}
@@ -63,9 +63,7 @@ spec:
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: {{ .Release.Name }}-docker-sock
-        - mountPath: /etc/chaincode
-          name: {{ .Release.Name }}-chaincode
-        - mountPath: /etc/crypto-config
+        - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config
           name: {{ .Release.Name }}-crypto-config
           readOnly: true
         - mountPath: /var/hyperledger/production
@@ -78,8 +76,6 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Release.Name }}-cli-pvc
       - name: {{ .Release.Name }}-crypto-config
-{{ toYaml .Values.cryptoConfigMount | indent 8 }}
-      - name: {{ .Release.Name }}-chaincode
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
 ---
 kind: PersistentVolumeClaim
