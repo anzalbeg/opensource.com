@@ -38,6 +38,9 @@ fabricCa2:
 fabricPeer:
   image: hyperledger/fabric-peer
   tag: *fabricTag
+fabricCli:
+  image: hyperledger/fabric-tools
+  tag: x86_64-1.0.5
 ingress:
   enabled: false
   # Used to create an Ingress record.
