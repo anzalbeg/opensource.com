@@ -83,7 +83,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: orderer-datadir
-      namespace: {{ .Values.namespace }}
+      namespace: {{ .Values.namespace.orderernamepsace }}
     spec:
       storageClassName: standard
       accessModes:
