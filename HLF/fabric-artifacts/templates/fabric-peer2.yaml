@@ -56,7 +56,7 @@ spec:
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 0.0.0.0:7051
         - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
-          value: net_fabric-ca
+          value: net_corporate-hyperledger-cluster
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
