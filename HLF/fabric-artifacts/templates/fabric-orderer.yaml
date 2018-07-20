@@ -16,7 +16,7 @@ spec:
   type: LoadBalancer
 ---
 apiVersion: apps/v1beta1
-kind: StatefulSet
+kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-orderer

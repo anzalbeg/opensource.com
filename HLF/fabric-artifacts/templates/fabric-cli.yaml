@@ -19,7 +19,7 @@ spec:
   type: LoadBalancer
 ---
 apiVersion: v1
-kind: ReplicationController
+kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-cli
