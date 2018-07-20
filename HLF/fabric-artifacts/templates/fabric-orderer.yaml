@@ -20,11 +20,10 @@ kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-orderer
-  namespace: {{ .Values.namespace.orderernamepsace }}
   name: {{ .Release.Name }}-orderer
+  namespace: {{ .Values.namespace.orderernamepsace }}
 spec:
   replicas: {{ .Values.fabricOrderer.replicas }}
-  serviceName: orderer
   selector:
     matchLabels:
       service: {{ .Release.Name }}-orderer
@@ -41,11 +40,6 @@ spec:
       containers:
       - command:
         - orderer
-        image: {{ .Values.fabricOrderer.image }}:{{ .Values.fabricOrderer.tag }}
-        name: {{ .Release.Name }}-orderer
-        workingDir: /opt/gopath/src/github.com/hyperledger/fabric
-        ports:
-        - containerPort: 7050
         env:
         - name: GODEBUG
           value: netdns=go+1
@@ -65,6 +59,11 @@ spec:
         - name: ORDERER_KAFKA_VERBOSE
           value: "true"
         {{- end }}
+        image: {{ .Values.fabricOrderer.image }}:{{ .Values.fabricOrderer.tag }}
+        name: {{ .Release.Name }}-orderer
+        workingDir: /opt/gopath/src/github.com/hyperledger/fabric
+        ports:
+        - containerPort: 7050
         volumeMounts:
           - mountPath: /var/run/docker.sock
             name: {{ .Release.Name }}-docker-sock
@@ -77,6 +76,7 @@ spec:
       - name: {{ .Release.Name }}-docker-sock
         hostPath:
           path: /var/run/docker.sock
+      - name: orderer-datadir
       - name: {{ .Release.Name }}-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
         
