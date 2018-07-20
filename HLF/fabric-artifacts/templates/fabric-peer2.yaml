@@ -18,8 +18,8 @@ spec:
     service: {{ .Release.Name }}-peer2
   type: LoadBalancer
 ---
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-peer2
@@ -28,7 +28,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    service: {{ .Release.Name }}-peer2
+    matchLabels:
+      service: {{ .Release.Name }}-peer2
   template:
     metadata:
       labels:

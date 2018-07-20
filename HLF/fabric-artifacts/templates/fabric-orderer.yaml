@@ -15,8 +15,8 @@ spec:
     service: {{ .Release.Name }}-orderer
   type: LoadBalancer
 ---
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-orderer
@@ -25,6 +25,9 @@ metadata:
 spec:
   replicas: {{ .Values.fabricOrderer.replicas }}
   serviceName: orderer
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-orderer
   template:
     metadata:
       labels:
