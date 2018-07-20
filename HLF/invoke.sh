@@ -1,25 +1,5 @@
 #!/bin/sh
 
-# setting up the peer1 env variables inside peer environment
-
-# export GENESIS_BLOCK=/etc/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
-# export CLI_POD_ID=`kubectl get pod --namespace org1namespace | grep cli | cut -f1 -d' '`
-# export ORDERER_POD_ID=`kubectl get pod --namespace orderernamepsace | grep orderer | cut -f1 -d' '`
-# export ORDERER_ADDR=`kubectl get --all-namespaces  --output json  pods | jq '.items[] | select(.metadata.name=="'$ORDERER_POD_ID'")' | jq .status.podIP`
-# export ORG_DOMAIN="org1.example.com"
-# export CORE_PEER_MSPCONFIGPATH=/etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp
-# export PEER_POD_ID=`kubectl get pod --namespace org1namespace | grep peer1 | cut -f1 -d' '`
-# export PEER_ADDRESS=`kubectl get --all-namespaces  --output json  pods | jq '.items[] | select(.metadata.name=="'$PEER_POD_ID'")' | jq .status.podIP`
-# export CORE_PEER_ADDRESS="$PEER_ADDRESS:7051"
-# export CHANNEL_NAME="mychannel"
-
-# creating channel name mychannel
-
-# kubectl exec $PEER_POD_ID --namespace org1namespace -it --  bash -c "CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS peer channel create --logging-level=DEBUG -o $ORDERER_ADDR:7050 -c mychannel -f $GENESIS_BLOCK"
-
-
-
-
 # setting up the peer1 env variables inside cli environment
 
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
@@ -34,26 +14,10 @@ export PEER_POD_ID=`kubectl get pod --namespace org1namespace | grep peer1 | cut
 export PEER_ADDRESS=`kubectl get --all-namespaces  --output json  pods | jq '.items[] | select(.metadata.name=="'$PEER_POD_ID'")' | jq .status.podIP`
 export CORE_PEER_ADDRESS="$PEER_ADDRESS:7051"
 export CHANNEL_NAME="mychannel"
-export CORE_CHAINCODE_EXECUTETIMEOUT=150000
 
-# fetch first block from orderer
+# invoke 
 
-# kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer channel fetch 0 mychannel.block -c mychannel -o $ORDERER_ADDR:7050"
-
-# sleep 20
-
-# joining mychannel with peer1
-
-# kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer channel join -b mychannel.block -o $ORDERER_ADDR:7050"
-
-# installing chaincode on peer1
-
-# kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode install -n mycc -v 1.0 -p $CHAINCODE_PATH"
-
-#instantiating chaincode
-
-kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && CORE_CHAINCODE_EXECUTETIMEOUT=$CORE_CHAINCODE_EXECUTETIMEOUT && peer chaincode instantiate -o $ORDERER_ADDR:7050 -C $CHANNEL_NAME -n mycc -v 1.0 -c '{\"Args\":[\"init\",\"a\", \"100\", \"b\",\"200\"]}' -P \"OR ('Org1MSP.member','Org2MSP.member')\""
-
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem  -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}'
 
 
 #setting up the peer2 env variables inside cli environment
