@@ -18,7 +18,7 @@ spec:
     service: {{ .Release.Name }}-cli
   type: LoadBalancer
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:

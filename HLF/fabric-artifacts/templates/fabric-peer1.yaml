@@ -18,7 +18,7 @@ spec:
     service: {{ .Release.Name }}-peer1
   type: LoadBalancer
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -55,8 +55,6 @@ spec:
           value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 0.0.0.0:7051
-        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
-          value: net_corporate-hyperledger-cluster
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
