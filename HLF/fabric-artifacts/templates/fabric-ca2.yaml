@@ -4,14 +4,14 @@ metadata:
   name: ca2
   namespace: {{ .Values.namespace.org2namespace }}
 spec:
- loadBalancerIP: {{ .Values.ingress.addr }}
- externalIPs:
- - {{ .Values.ingress.addr }}
+  loadBalancerIP: {{ .Values.ingress.addr }}
+  externalIPs:
+  - {{ .Values.ingress.addr }}
   ports:
   - name: "api"
     port: 7054
-    targetPort: 7054
     protocol: TCP
+    targetPort: 7054
   selector:
     service: {{ .Release.Name }}-ca2
   type: LoadBalancer
@@ -36,7 +36,7 @@ spec:
     spec:
       hostAliases:
       - ip: "{{ .Values.fabricOrderer.addr }}"
-     hostnames:
+      hostnames:
        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
