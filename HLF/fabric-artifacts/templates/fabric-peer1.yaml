@@ -34,6 +34,7 @@ spec:
       service: {{ .Release.Name }}-peer1
   template:
     metadata:
+      name: {{ .Release.Name }}-peer1
       labels:
         service: {{ .Release.Name }}-peer1
       namespace: {{ .Values.namespace.org1namespace }}

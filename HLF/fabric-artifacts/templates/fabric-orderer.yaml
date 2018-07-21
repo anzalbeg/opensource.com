@@ -5,15 +5,12 @@ metadata:
   namespace: {{ .Values.namespace.orderernamepsace }}
 
 spec:
-  type: NodePort
   loadBalancerIP: {{ .Values.ingress.addr }}
   externalIPs:
   - {{ .Values.ingress.addr }}
   ports:
-  - name: "ordererrequest"
-    port: 7050
+  - port: 7050
     protocol: TCP
-    targetPort: 7050
   selector:
     service: {{ .Release.Name }}-orderer
   type: LoadBalancer
@@ -32,6 +29,7 @@ spec:
       service: {{ .Release.Name }}-orderer
   template:
     metadata:
+      name: {{ .Release.Name }}-orderer
       labels:
         service: {{ .Release.Name }}-orderer
       namespace: {{ .Values.namespace.orderernamepsace }}

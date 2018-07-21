@@ -38,6 +38,7 @@ spec:
       service: {{ .Release.Name }}-cli
   template:
     metadata:
+      name: {{ .Release.Name }}-cli
       labels:
         service: {{ .Release.Name }}-cli
       namespace: {{ .Values.namespace.org1namespace }}

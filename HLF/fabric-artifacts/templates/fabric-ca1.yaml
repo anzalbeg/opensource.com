@@ -30,6 +30,7 @@ spec:
       service: {{ .Release.Name }}-ca1
   template:
     metadata:
+      name: {{ .Release.Name }}-ca1
       labels:
         service: {{ .Release.Name }}-ca1
       namespace: {{ .Values.namespace.org1namespace }}

@@ -23,8 +23,8 @@ ORG2_DOMAIN="org2.example.com"
 # fi
 
 #if [ ! -d "bin"]; then
- echo "heelo bin"
-   curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
+ #echo "heelo bin"
+  # curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
 #fi
 
 # sleep $SLEEP_TIMEOUT
@@ -49,7 +49,7 @@ ORG2_DOMAIN="org2.example.com"
 # -c ./crypto-config/peerOrganizations/$ORG2_DOMAIN/users/Admin@$ORG2_DOMAIN/msp/signcerts/Admin@$ORG2_DOMAIN-cert.pem \
 # -k ./crypto-config/peerOrganizations/$ORG2_DOMAIN/users/Admin@$ORG2_DOMAIN/msp/keystore/$KEYSTORE2
 
-sleep $SLEEP_TIMEOUT
+#sleep $SLEEP_TIMEOUT
 
 export FABRIC_CFG_PATH=$PWD
 
@@ -57,8 +57,8 @@ OUTPUT_DIR=$PWD/channel-artifacts
 
 mkdir -p $OUTPUT_DIR
 
-#./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock $OUTPUT_DIR/orderer-genesis.block
-#./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx $OUTPUT_DIR/orderer-channel.tx -channelID mychannel
+./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock $OUTPUT_DIR/orderer-genesis.block
+./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx $OUTPUT_DIR/orderer-channel.tx -channelID mychannel
 ./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate $OUTPUT_DIR/Org1MSPanchors.tx -channelID mychannel -asOrg Org1MSP
 ./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate $OUTPUT_DIR/Org2MSPanchors.tx -channelID mychannel -asOrg Org2MSP
 
