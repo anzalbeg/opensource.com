@@ -8,12 +8,18 @@ spec:
   #externalIPs:
   #- {{ .Values.ingress.addr }}
   ports:
+  - name: "ordererrequest"
+    port: 7050
+    protocol: TCP
+    targetPort: 7050
   - name: "requests"
     port: 7051
     protocol: TCP
+    targetPort: 7051
   - name: "events"
     port: 7053
     protocol: TCP
+    targetPort: 7053
   selector:
     service: {{ .Release.Name }}-cli
   type: LoadBalancer
@@ -63,6 +69,10 @@ spec:
         image: {{ .Values.fabricCli.image }}:{{ .Values.fabricCli.tag }}
         name: {{ .Release.Name }}-cli
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        ports:
+        - containerPort: 7051
+        - containerPort: 7053
+        - containerPort: 7050
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: {{ .Release.Name }}-docker-sock

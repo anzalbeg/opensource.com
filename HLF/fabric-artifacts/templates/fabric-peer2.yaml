@@ -11,9 +11,11 @@ spec:
   - name: "requests"
     port: 7051
     protocol: TCP
+    targetPort: 7051
   - name: "events"
     port: 7053
     protocol: TCP
+    targetPort: 7053
   selector:
     service: {{ .Release.Name }}-peer2
   type: LoadBalancer

@@ -11,6 +11,7 @@ spec:
   - name: "api"
     port: 7054
     protocol: TCP
+    targetPort: 7054
   selector:
     service: {{ .Release.Name }}-ca1
   type: LoadBalancer
