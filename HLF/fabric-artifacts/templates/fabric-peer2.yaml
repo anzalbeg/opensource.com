@@ -57,7 +57,7 @@ spec:
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 0.0.0.0:7051
         - name: CORE_CHAINCODE_EXECUTETIMEOUT 
-          value: 200000
+          value: '200000'
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
