@@ -13,7 +13,7 @@ service:
   externalPort: 80
   internalPort: 80nam
 fabricOrderer:
-  #addr: 192.168.99.100
+  addr: 192.168.99.100
   orgDomain: org1.example.com
   replicas: 1
   image: hyperledger/fabric-orderer

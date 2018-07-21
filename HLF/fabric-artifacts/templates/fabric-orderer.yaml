@@ -5,10 +5,10 @@ metadata:
   namespace: {{ .Values.namespace.orderernamepsace }}
 
 spec:
-  #type: NodePort
-  #loadBalancerIP: {{ .Values.ingress.addr }}
-  #externalIPs:
-  #- {{ .Values.ingress.addr }}
+  type: NodePort
+  loadBalancerIP: {{ .Values.ingress.addr }}
+  externalIPs:
+  - {{ .Values.ingress.addr }}
   ports:
   - name: "ordererrequest"
     port: 7050
@@ -36,10 +36,10 @@ spec:
         service: {{ .Release.Name }}-orderer
       namespace: {{ .Values.namespace.orderernamepsace }}
     spec:
-      #hostAliases:
-      #- ip: "{{ .Values.fabricOrderer.addr }}"
-      #  hostnames:
-      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      hostAliases:
+      - ip: "{{ .Values.fabricOrderer.addr }}"
+       hostnames:
+       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - orderer

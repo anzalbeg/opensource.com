@@ -4,9 +4,9 @@ metadata:
   name: ca1
   namespace: {{ .Values.namespace.org1namespace }}
 spec:
-  #loadBalancerIP: {{ .Values.ingress.addr }}
-  #externalIPs:
-  #- {{ .Values.ingress.addr }}
+  loadBalancerIP: {{ .Values.ingress.addr }}
+  externalIPs:
+  - {{ .Values.ingress.addr }}
   ports:
   - name: "api"
     port: 7054
@@ -34,10 +34,10 @@ spec:
         service: {{ .Release.Name }}-ca1
       namespace: {{ .Values.namespace.org1namespace }}
     spec:
-      #hostAliases:
-      #- ip: "{{ .Values.fabricOrderer.addr }}"
-      #hostnames:
-      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      hostAliases:
+      - ip: "{{ .Values.fabricOrderer.addr }}"
+      hostnames:
+       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - fabric-ca-server

@@ -4,9 +4,9 @@ metadata:
   name: peer2
   namespace: {{ .Values.namespace.org2namespace }}
 spec:
-  #loadBalancerIP: {{ .Values.ingress.addr }}
-  #externalIPs:
-  #- {{ .Values.ingress.addr }}
+  loadBalancerIP: {{ .Values.ingress.addr }}
+  externalIPs:
+  - {{ .Values.ingress.addr }}
   ports:
   - name: "requests"
     port: 7051
@@ -38,10 +38,10 @@ spec:
         service: {{ .Release.Name }}-peer2
       namespace: {{ .Values.namespace.org2namespace }}
     spec:
-      #hostAliases:
-      #- ip: "{{ .Values.fabricOrderer.addr }}"
-      #  hostnames:
-      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      hostAliases:
+      - ip: "{{ .Values.fabricOrderer.addr }}"
+       hostnames:
+       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - peer
