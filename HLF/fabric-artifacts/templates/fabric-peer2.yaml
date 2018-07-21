@@ -40,7 +40,7 @@ spec:
     spec:
       hostAliases:
       - ip: "{{ .Values.fabricOrderer.addr }}"
-       hostnames:
+      hostnames:
        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:

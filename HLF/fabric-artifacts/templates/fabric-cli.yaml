@@ -4,9 +4,9 @@ metadata:
   name: cli
   namespace: {{ .Values.namespace.org1namespace }}
 spec:
-  #loadBalancerIP: {{ .Values.ingress.addr }}
-  #externalIPs:
-  #- {{ .Values.ingress.addr }}
+  loadBalancerIP: {{ .Values.ingress.addr }}
+  externalIPs:
+  - {{ .Values.ingress.addr }}
   ports:
   - name: "ordererrequest"
     port: 7050
@@ -44,7 +44,7 @@ spec:
     spec:
       hostAliases:
       - ip: "{{ .Values.fabricOrderer.addr }}"
-       hostnames:
+      hostnames:
        - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
