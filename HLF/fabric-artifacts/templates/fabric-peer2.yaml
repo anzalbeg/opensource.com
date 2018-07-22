@@ -67,8 +67,6 @@ spec:
           value: 104.197.198.61:30480
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 104.197.198.61:31771
-        - name: CORE_PEER_EVENTS_ADDRESS
-          value: 104.197.198.61:30479
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID

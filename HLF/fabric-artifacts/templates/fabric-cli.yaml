@@ -20,7 +20,7 @@ spec:
     port: 7053
     protocol: TCP
     targetPort: 7053
-    - name: "chaincodelistenaddress"
+  - name: "chaincodelistenaddress"
     port: 7052
     protocol: TCP
     targetPort: 7052
@@ -75,8 +75,6 @@ spec:
           value: 35.193.91.66:32757
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 35.193.91.66:32009
-        - name: CORE_PEER_EVENTS_ADDRESS
-          value: 35.193.91.66:32756
         - name: CORE_PEER_ADDRESSAUTODETECT
           value: "true"
         - name: CORE_PEER_SERVERHOSTOVERRIDE

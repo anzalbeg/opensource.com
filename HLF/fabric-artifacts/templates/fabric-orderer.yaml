@@ -59,9 +59,7 @@ spec:
         - name: CORE_PEER_NETWORKID
           value: corporate-hyperledger-cluster_poc
         - name: ORDERER_GENERAL_LISTENADDRESS
-          value: 35.184.113.51
-        - name: ORDERER_GENERAL_LISTENPORT
-          value: 30724
+          value: "35.184.113.51"
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
