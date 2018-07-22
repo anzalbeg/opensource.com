@@ -1,7 +1,7 @@
 # Default values for fabric-artifacts.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-fabricTag: &fabricTag x86_64-1.1.0
+fabricTag: &fabricTag x86_64-1.1.1
 replicaCount: 1
 image:
   repository: nginx
@@ -38,9 +38,18 @@ fabricCa2:
 fabricPeer:
   image: hyperledger/fabric-peer
   tag: *fabricTag
+fabricBaseImage:
+  image: hyperledger/fabric-baseimage
+  tag: x86_64-0.4.8
+fabricCcenv:
+  image: hyperledger/fabric-ccenv
+  tag: *fabricTag
+fabricBaseOS:
+  image: hyperledger/fabric-baseos
+  tag: x86_64-0.4.8
 fabricCli:
   image: hyperledger/fabric-tools
-  tag: x86_64-1.0.5
+  tag: *fabricTag
 ingress:
   enabled: false
   # Used to create an Ingress record.
