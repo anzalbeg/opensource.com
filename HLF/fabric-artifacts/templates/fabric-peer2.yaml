@@ -54,13 +54,21 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ID
-          value: peer2.{{ .Values.fabricOrg2.domain }}
+          value: peer2
+        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+          value: corporate-hyperledger-cluster_poc
+        - name: CORE_PEER_NETWORKID
+          value: corporate-hyperledger-cluster_poc
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: true
         - name: CORE_PEER_ADDRESS
-          value: 0.0.0.0:7051
+          value: 104.197.198.61:31771
+        - name: CORE_PEER_CHAINCODELISTENADDRESS
+          value: 104.197.198.61:30480
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: 0.0.0.0:7051
-        - name: CORE_CHAINCODE_EXECUTETIMEOUT 
-          value: '200000'
+          value: 104.197.198.61:31771
+        - name: CORE_PEER_EVENTS_ADDRESS
+          value: 104.197.198.61:30479
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
