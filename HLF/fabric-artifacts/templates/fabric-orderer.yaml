@@ -60,8 +60,6 @@ spec:
           value: corporate-hyperledger-cluster_poc
         - name: ORDERER_GENERAL_LISTENADDRESS
           value: "0.0.0.0"
-        - name: ORDERER_GENERAL_LISTENPORT
-          value: "30724"
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
