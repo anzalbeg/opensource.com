@@ -16,6 +16,10 @@ spec:
     port: 7053
     protocol: TCP
     targetPort: 7053
+  - name: "listenaddress"
+    port: 7052
+    protocol: TCP
+    targetPort: 7052
   selector:
     service: {{ .Release.Name }}-peer1
   type: LoadBalancer
@@ -59,8 +63,8 @@ spec:
           value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 0.0.0.0:7051
-        - name: CORE_CHAINCODE_EXECUTETIMEOUT 
-          value: '200000'
+        - name: CORE_PEER_CHAINCODELISTENADDRESS 
+          value: 0.0.0.0:7052
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
@@ -71,6 +75,7 @@ spec:
         ports:
         - containerPort: 7051
         - containerPort: 7053
+        - containerPort: 7052
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: {{ .Release.Name }}-docker-sock
