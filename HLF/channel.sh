@@ -18,7 +18,6 @@ export CORE_PEER_ADDRESS="35.193.91.66:32009"
 export CHANNEL_NAME="mychannel"
 export CORE_CHAINCODE_EXECUTETIMEOUT="150000"
 
-# create channel 
+# create channel
 
-#kubectl exec $CLI_POD_ID --namespace org1namespace -it --  bash -c "CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS peer channel create --logging-level=DEBUG -o $ORDERER_ADDR -c mychannel -f $GENESIS_BLOCK"
-kubectl exec $CLI_POD_ID --namespace org1namespace -it --  bash -c "peer channel create --logging-level=DEBUG -o $ORDERER_ADDR -c mychannel -f $GENESIS_BLOCK"
+kubectl exec $CLI_POD_ID --namespace org1namespace -it --  bash -c "CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS peer channel create --logging-level=DEBUG -o $ORDERER_ADDR -c mychannel -f $GENESIS_BLOCK"

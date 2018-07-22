@@ -9,10 +9,8 @@ spec:
   externalIPs:
   - {{ .Values.ingress.addr }}
   ports:
-  - name: "ordererrequest"
-    port: 7050
+  - port: 7050
     protocol: TCP
-    targetPort: 7050
   selector:
     service: {{ .Release.Name }}-orderer
   type: LoadBalancer
@@ -48,18 +46,8 @@ spec:
           value: netdns=go+1
         - name: ORDERER_GENERAL_LOGLEVEL
           value: debug
-        - name: CORE_VM_ENDPOINT
-          value: unix:///var/run/docker.sock
-        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
-          value: corporate-hyperledger-cluster_poc
-        - name: GRPC_TRACE
-          value: "all=true"
-        - name: GRPC_VERBOSITY
-          value: debug
-        - name: CORE_PEER_NETWORKID
-          value: corporate-hyperledger-cluster_poc
         - name: ORDERER_GENERAL_LISTENADDRESS
-          value: "0.0.0.0"
+          value: 0.0.0.0
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
