@@ -64,9 +64,9 @@ spec:
         - name: CORE_PEER_ADDRESS
           value: 104.197.198.61:31771
         - name: CORE_PEER_CHAINCODELISTENADDRESS
-          value: 104.197.198.61:30480
+          value: 0.0.0.0:30480
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: 104.197.198.61:31771
+          value: 0.0.0.0:31771
         - name: CORE_PEER_MSPCONFIGPATH
           value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg2.domain }}/peers/peer0.{{ .Values.fabricOrg2.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
@@ -76,6 +76,7 @@ spec:
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric
         ports:
         - containerPort: 7051
+        - containerPort: 7052
         - containerPort: 7053
         volumeMounts:
         - mountPath: /var/run/docker.sock

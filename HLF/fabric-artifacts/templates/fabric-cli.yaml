@@ -69,16 +69,16 @@ spec:
           value: debug
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
         - name: CORE_PEER_ADDRESS
           value: 35.193.91.66:32009
         - name: CORE_PEER_CHAINCODELISTENADDRESS
-          value: 35.193.91.66:32757
+          value: 0.0.0.0:32757
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: 35.193.91.66:32009
-        - name: CORE_PEER_ADDRESSAUTODETECT
-          value: "true"
+          value: 0.0.0.0:32009
         - name: CORE_PEER_SERVERHOSTOVERRIDE
-          value: 35.193.91.66:32009
+          value: 0.0.0.0:32009
         - name: CORE_PEER_ID
           value: cli
         - name: CORE_PEER_MSPCONFIGPATH
@@ -92,6 +92,7 @@ spec:
         - containerPort: 7051
         - containerPort: 7053
         - containerPort: 7050
+        - containerPort: 7052
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: {{ .Release.Name }}-docker-sock
