@@ -20,6 +20,10 @@ spec:
     port: 7053
     protocol: TCP
     targetPort: 7053
+    - name: "chaincodelistenaddress"
+    port: 7052
+    protocol: TCP
+    targetPort: 7052
   selector:
     service: {{ .Release.Name }}-cli
   type: LoadBalancer
@@ -74,7 +78,7 @@ spec:
         - name: CORE_PEER_EVENTS_ADDRESS
           value: 35.193.91.66:32756
         - name: CORE_PEER_ADDRESSAUTODETECT
-          value: true
+          value: "true"
         - name: CORE_PEER_SERVERHOSTOVERRIDE
           value: 35.193.91.66:32009
         - name: CORE_PEER_ID

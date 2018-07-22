@@ -60,7 +60,7 @@ spec:
         - name: CORE_PEER_NETWORKID
           value: corporate-hyperledger-cluster_poc
         - name: CORE_PEER_ADDRESSAUTODETECT
-          value: true
+          value: "true"
         - name: CORE_PEER_ADDRESS
           value: 35.193.91.66:32009
         - name: CORE_PEER_CHAINCODELISTENADDRESS
