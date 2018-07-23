@@ -63,8 +63,8 @@ spec:
           value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
           value: 0.0.0.0:7051
-        - name: CORE_PEER_CHAINCODELISTENADDRESS 
-          value: 0.0.0.0:7052
+        - name: CORE_PEER_EXTERNALENDPOINT
+          value: "true"
         - name: CORE_VM_DOCKER_ATTACHSTDOUT
           value: "true"
         - name: CORE_PEER_MSPCONFIGPATH
