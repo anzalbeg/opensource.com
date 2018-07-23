@@ -66,7 +66,7 @@ spec:
         - name: CORE_PEER_ID
           value: cli
         - name: CORE_PEER_CHAINCODELISTENADDRESS 
-          value: 0.0.0.0:7052
+          value: peer1.{{ .Values.fabricOrg1.domain }}:7052
         - name: CORE_PEER_MSPCONFIGPATH
           value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
