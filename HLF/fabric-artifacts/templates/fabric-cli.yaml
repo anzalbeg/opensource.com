@@ -61,8 +61,8 @@ spec:
           value: unix:///var/run/docker.sock
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
-#        - name: CORE_PEER_ADDRESS
-#          value: {{ .Values.ingress.addr }}:7051
+        - name: CORE_PEER_ADDRESS
+          value: 35.193.91.66:32009
         - name: CORE_PEER_ADDRESSAUTODETECT
           value: "true"
         - name: CORE_PEER_ID
@@ -71,8 +71,8 @@ spec:
         #   value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_MSPCONFIGPATH
           value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/users/Admin@{{ .Values.fabricOrg1.domain }}/msp
-        # - name: CORE_PEER_LOCALMSPID
-        #   value: {{ .Values.fabricOrg1.msp }}
+        - name: CORE_PEER_LOCALMSPID
+          value: {{ .Values.fabricOrg1.msp }}
         image: {{ .Values.fabricCli.image }}:{{ .Values.fabricCli.tag }}
         name: {{ .Release.Name }}-cli
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric/peer
