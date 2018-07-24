@@ -62,7 +62,7 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ADDRESS
-          value: 35.193.91.66:32009
+          value: 0.0.0.0:7051
         - name: CORE_PEER_ID
           value: cli
         # - name: CORE_PEER_CHAINCODELISTENADDRESS 
