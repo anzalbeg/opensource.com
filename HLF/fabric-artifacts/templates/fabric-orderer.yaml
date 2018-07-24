@@ -1,27 +1,10 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: orderer
-  namespace: {{ .Values.namespace.orderernamepsace }}
-
-spec:
-  loadBalancerIP: {{ .Values.ingress.addr }}
-  externalIPs:
-  - {{ .Values.ingress.addr }}
-  ports:
-  - port: 7050
-    protocol: TCP
-  selector:
-    service: {{ .Release.Name }}-orderer
-  type: LoadBalancer
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     service: {{ .Release.Name }}-orderer
   name: {{ .Release.Name }}-orderer
-  namespace: {{ .Values.namespace.orderernamepsace }}
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.fabricOrderer.replicas }}
   selector:
@@ -32,12 +15,12 @@ spec:
       name: {{ .Release.Name }}-orderer
       labels:
         service: {{ .Release.Name }}-orderer
-      namespace: {{ .Values.namespace.orderernamepsace }}
+      namespace: {{ .Values.namespace }}
     spec:
-      hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
-      hostnames:
-       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      # hostAliases:
+      # - ip: "{{ .Values.fabricOrderer.addr }}"
+      # hostnames:
+      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - orderer
@@ -84,7 +67,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: orderer-datadir
-      namespace: {{ .Values.namespace.orderernamepsace }}
+      namespace: {{ .Values.namespace }}
     spec:
       storageClassName: standard
       accessModes:

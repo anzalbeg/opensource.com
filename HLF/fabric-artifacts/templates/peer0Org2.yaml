@@ -1,52 +1,26 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: peer2
-  namespace: {{ .Values.namespace.org2namespace }}
-spec:
-  loadBalancerIP: {{ .Values.ingress.addr }}
-  externalIPs:
-  - {{ .Values.ingress.addr }}
-  ports:
-  - name: "requests"
-    port: 7051
-    protocol: TCP
-    targetPort: 7051
-  - name: "events"
-    port: 7053
-    protocol: TCP
-    targetPort: 7053
-  - name: "listenaddress"
-    port: 7052
-    protocol: TCP
-    targetPort: 7052
-  selector:
-    service: {{ .Release.Name }}-peer2
-  type: LoadBalancer
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Release.Name }}-peer2
-  name: {{ .Release.Name }}-peer2
-  namespace: {{ .Values.namespace.org2namespace }}
+    service: {{ .Release.Name }}-peer0Org2
+  name: {{ .Release.Name }}-peer0Org2
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: {{ .Release.Name }}-peer2
+      service: {{ .Release.Name }}-peer0Org2
   template:
     metadata:
-      name: {{ .Release.Name }}-peer2
+      name: {{ .Release.Name }}-peer0Org2
       labels:
-        service: {{ .Release.Name }}-peer2
-      namespace: {{ .Values.namespace.org2namespace }}
+        service: {{ .Release.Name }}-peer0Org2
+      namespace: {{ .Values.namespace }}
     spec:
-      hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
-      hostnames:
-       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+      # hostAliases:
+      # - ip: "{{ .Values.fabricOrderer.addr }}"
+      # hostnames:
+      #  - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
       containers:
       - command:
         - peer
@@ -58,7 +32,7 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ID
-          value: peer2.{{ .Values.fabricOrg2.domain }}
+          value: peer0Org2.{{ .Values.fabricOrg2.domain }}
         - name: CORE_PEER_ADDRESS
           value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
@@ -72,7 +46,7 @@ spec:
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg2.msp }}
         image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}
-        name: {{ .Release.Name }}-peer2
+        name: {{ .Release.Name }}-peer0Org2
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric
         ports:
         - containerPort: 7051
@@ -92,17 +66,17 @@ spec:
           path: /var/run/docker.sock
       - name: {{ .Release.Name }}-fabric
         persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-peer2-pvc
+          claimName: {{ .Release.Name }}-peer0Org2-pvc
       - name: {{ .Release.Name }}-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-peer2-pvc
-  namespace: {{ .Values.namespace.org2namespace }}
+  name: {{ .Release.Name }}-peer0Org2-pvc
+  namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Release.Name }}-peer2-pvc
+    app: {{ .Release.Name }}-peer0Org2-pvc
 spec:
   storageClassName: standard
   accessModes:

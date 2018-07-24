@@ -26,7 +26,7 @@ export CHANNEL_NAME="mychannel"
 #instantiating chaincode
 # invoke 
 
-kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_VM_DOCKER_ATTACHSTDOUT=$CORE_VM_DOCKER_ATTACHSTDOUT && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode invoke -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -c '{\"Args\":[\"invoke\",\"a\",\"b\",\"10\"]}'"
+kubectl exec $CLI_POD_ID --namespace org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_VM_DOCKER_ATTACHSTDOUT=$CORE_VM_DOCKER_ATTACHSTDOUT && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode invoke -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -c '{\"Args\":[\"invoke\",\"a\",\"b\",\"100\"]}'"
 
 
 #setting up the peer2 env variables inside cli environment

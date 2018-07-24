@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Release.Name }}-cli
-  name: {{ .Release.Name }}-cli
-  namespace: {{ .Values.namespace.org1namespace }}
+    service: {{ .Release.Name }}-peer1Org1
+  name: {{ .Release.Name }}-peer1Org1
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: {{ .Release.Name }}-cli
+      service: {{ .Release.Name }}-peer1Org1
   template:
     metadata:
-      name: {{ .Release.Name }}-cli
+      name: {{ .Release.Name }}-peer1Org1
       labels:
-        service: {{ .Release.Name }}-cli
-      namespace: {{ .Values.namespace.org1namespace }}
+        service: {{ .Release.Name }}-peer1Org1
+      namespace: {{ .Values.namespace }}
     spec:
       # hostAliases:
       # - ip: "{{ .Values.fabricOrderer.addr }}"
@@ -31,28 +31,31 @@ spec:
           value: unix:///var/run/docker.sock
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
+        - name: CORE_PEER_ID
+          value: peer1Org1.{{ .Values.fabricOrg1.domain }}
         - name: CORE_PEER_ADDRESS
           value: 0.0.0.0:7051
-        - name: CORE_PEER_ID
-          value: cli
-        # - name: CORE_PEER_CHAINCODELISTENADDRESS 
-        #   value: {{ .Values.ingress.addr }}:7051
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: 0.0.0.0:7051
+        - name: CORE_PEER_EXTERNALENDPOINT
+          value: "true"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/users/Admin@{{ .Values.fabricOrg1.domain }}/msp
+          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg1.msp }}
-        image: {{ .Values.fabricCli.image }}:{{ .Values.fabricCli.tag }}
-        name: {{ .Release.Name }}-cli
-        workingDir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}
+        name: {{ .Release.Name }}-peer1Org1
+        workingDir: /opt/gopath/src/github.com/hyperledger/fabric
         ports:
         - containerPort: 7051
         - containerPort: 7053
-        - containerPort: 7050
         - containerPort: 7052
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: {{ .Release.Name }}-docker-sock
-        - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config
+        - mountPath: /etc/crypto-config
           name: {{ .Release.Name }}-crypto-config
           readOnly: true
         - mountPath: /var/hyperledger/production
@@ -63,17 +66,17 @@ spec:
           path: /var/run/docker.sock
       - name: {{ .Release.Name }}-fabric
         persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-cli-pvc
+          claimName: {{ .Release.Name }}-peer1Org1-pvc
       - name: {{ .Release.Name }}-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-cli-pvc
-  namespace: {{ .Values.namespace.org1namespace }}
+  name: {{ .Release.Name }}-peer1Org1-pvc
+  namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Release.Name }}-cli-pvc
+    app: {{ .Release.Name }}-peer1Org1-pvc
 spec:
   storageClassName: standard
   accessModes:
