@@ -73,10 +73,10 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-peer0Org2-pvc
+  name: {{ .Release.Name }}-peer0org2-pvc
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Release.Name }}-peer0Org2-pvc
+    app: {{ .Release.Name }}-peer0org2-pvc
 spec:
   storageClassName: standard
   accessModes:
