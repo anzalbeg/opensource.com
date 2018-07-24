@@ -60,9 +60,9 @@ spec:
         - name: CORE_PEER_ID
           value: peer2.{{ .Values.fabricOrg2.domain }}
         - name: CORE_PEER_ADDRESS
-          value: 0.0.0.0:7051
+          value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: 0.0.0.0:7051
+          value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_EXTERNALENDPOINT
           value: "true"
         - name: CORE_VM_DOCKER_ATTACHSTDOUT
