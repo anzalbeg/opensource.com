@@ -69,10 +69,10 @@ spec:
           value: cli
         # - name: CORE_PEER_CHAINCODELISTENADDRESS 
         #   value: {{ .Values.ingress.addr }}:7051
-        - name: CORE_PEER_MSPCONFIGPATH
-          value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/users/Admin@{{ .Values.fabricOrg1.domain }}/msp
-        - name: CORE_PEER_LOCALMSPID
-          value: {{ .Values.fabricOrg1.msp }}
+        # - name: CORE_PEER_MSPCONFIGPATH
+        #   value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/users/Admin@{{ .Values.fabricOrg1.domain }}/msp
+        # - name: CORE_PEER_LOCALMSPID
+        #   value: {{ .Values.fabricOrg1.msp }}
         image: {{ .Values.fabricCli.image }}:{{ .Values.fabricCli.tag }}
         name: {{ .Release.Name }}-cli
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric/peer
