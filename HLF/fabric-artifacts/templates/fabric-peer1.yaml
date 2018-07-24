@@ -67,8 +67,8 @@ spec:
           value: "true"
         - name: CORE_VM_DOCKER_ATTACHSTDOUT
           value: "true"
-        #- name: CORE_PEER_MSPCONFIGPATH
-        #  value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /etc/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/{{ .Values.fabricOrg1.domain }}/peers/peer1.{{ .Values.fabricOrg1.domain }}/msp
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg1.msp }}
         image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}

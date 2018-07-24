@@ -63,8 +63,6 @@ spec:
           value: DEBUG
         - name: CORE_PEER_ADDRESS
           value: 35.193.91.66:32009
-        - name: CORE_PEER_ADDRESSAUTODETECT
-          value: "true"
         - name: CORE_PEER_ID
           value: cli
         # - name: CORE_PEER_CHAINCODELISTENADDRESS 
