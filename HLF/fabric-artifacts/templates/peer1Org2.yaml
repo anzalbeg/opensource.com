@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Release.Name }}-peer1Org2
-  name: {{ .Release.Name }}-peer1Org2
+    service: {{ .Release.Name }}-peer1org2
+  name: {{ .Release.Name }}-peer1org2
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: {{ .Release.Name }}-peer1Org2
+      service: {{ .Release.Name }}-peer1org2
   template:
     metadata:
-      name: {{ .Release.Name }}-peer1Org2
+      name: {{ .Release.Name }}-peer1org2
       labels:
-        service: {{ .Release.Name }}-peer1Org2
+        service: {{ .Release.Name }}-peer1org2
       namespace: {{ .Values.namespace }}
     spec:
       # hostAliases:
@@ -32,7 +32,7 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         - name: CORE_PEER_ID
-          value: peer1Org2.{{ .Values.fabricOrg2.domain }}
+          value: peer1.{{ .Values.fabricOrg2.domain }}
         - name: CORE_PEER_ADDRESS
           value: 0.0.0.0:7051
         - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
@@ -46,7 +46,7 @@ spec:
         - name: CORE_PEER_LOCALMSPID
           value: {{ .Values.fabricOrg2.msp }}
         image: {{ .Values.fabricPeer.image }}:{{ .Values.fabricPeer.tag }}
-        name: {{ .Release.Name }}-peer1Org2
+        name: {{ .Release.Name }}-peer1org2
         workingDir: /opt/gopath/src/github.com/hyperledger/fabric
         ports:
         - containerPort: 7051
@@ -66,7 +66,7 @@ spec:
           path: /var/run/docker.sock
       - name: {{ .Release.Name }}-fabric
         persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-peer1Org2-pvc
+          claimName: {{ .Release.Name }}-peer1org2-pvc
       - name: {{ .Release.Name }}-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
 ---
