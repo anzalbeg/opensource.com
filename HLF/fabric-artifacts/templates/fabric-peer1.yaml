@@ -59,10 +59,12 @@ spec:
           value: DEBUG
         - name: CORE_PEER_ID
           value: peer1.{{ .Values.fabricOrg1.domain }}
-        - name: CORE_PEER_ADDRESS
-          value: {{ .Values.ingress.addr }}:7051
-        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-          value: {{ .Values.ingress.addr }}:7051
+#        - name: CORE_PEER_ADDRESS
+#          value: {{ .Values.ingress.addr }}:7051
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        # - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+        #   value: {{ .Values.ingress.addr }}:7051
         - name: CORE_PEER_EXTERNALENDPOINT
           value: "true"
         - name: CORE_VM_DOCKER_ATTACHSTDOUT
