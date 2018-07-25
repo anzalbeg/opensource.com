@@ -18,4 +18,4 @@ export CORE_PEER_ADDRESS="10.63.240.194:7051"
 export CHANNEL_NAME="mychannel"
 #instantiating chaincode
 
-kubectl exec $CLI_POD_ID -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode upgrade -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -v 3.0 -c '{\"Args\":[\"init\",\"a\", \"100\", \"b\",\"200\"]}' -P \"OR ('Org1MSP.member','Org2MSP.member')\""
+kubectl exec $CLI_POD_ID -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode instantiate -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -v 3.0 -c '{\"Args\":[\"init\",\"a\", \"100\", \"b\",\"200\"]}' -P \"OR ('Org1MSP.peer','Org2MSP.peer')\""

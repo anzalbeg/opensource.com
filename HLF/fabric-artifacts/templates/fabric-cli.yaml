@@ -4,7 +4,7 @@ metadata:
   labels:
     service: {{ .Release.Name }}-cli
   name: {{ .Release.Name }}-cli
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace.org1namespace }}
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
       name: {{ .Release.Name }}-cli
       labels:
         service: {{ .Release.Name }}-cli
-      namespace: {{ .Values.namespace }}
+      namespace: {{ .Values.namespace.org1namespace }}
     spec:
       # hostAliases:
       # - ip: "{{ .Values.fabricOrderer.addr }}"
@@ -71,7 +71,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ .Release.Name }}-cli-pvc
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace.org1namespace }}
   labels:
     app: {{ .Release.Name }}-cli-pvc
 spec:

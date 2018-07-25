@@ -4,7 +4,7 @@ metadata:
   labels:
     service: {{ .Release.Name }}-orderer
   name: {{ .Release.Name }}-orderer
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace.orderernamespace }}
 spec:
   replicas: {{ .Values.fabricOrderer.replicas }}
   selector:
@@ -15,7 +15,7 @@ spec:
       name: {{ .Release.Name }}-orderer
       labels:
         service: {{ .Release.Name }}-orderer
-      namespace: {{ .Values.namespace }}
+      namespace: {{ .Values.namespace.orderernamespace }}
     spec:
       # hostAliases:
       # - ip: "{{ .Values.fabricOrderer.addr }}"
@@ -67,7 +67,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: orderer-datadir
-      namespace: {{ .Values.namespace }}
+      namespace: {{ .Values.namespace.orderernamespace }}
     spec:
       storageClassName: standard
       accessModes:
