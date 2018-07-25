@@ -41,11 +41,11 @@ export CHANNEL_NAME="mychannel"
 
 # sleep 10
 
-# # # joining mychannel with peer0org2
+# joining mychannel with peer1org1
  kubectl exec $CLI_POD_ID -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer channel join -b mychannel.block -o $ORDERER_ADDR"
 
 
-#setting up the peer2 env variables inside cli environment
+#setting up the peer0org2 env variables inside cli environment
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
 export CLI_POD_ID=`kubectl get pod | grep cli | cut -f1 -d' '`
 #export ORDERER_POD_ID=`kubectl get pod | grep orderer | cut -f1 -d' '`
@@ -61,6 +61,6 @@ export CORE_PEER_LOCALMSPID="Org2MSP"
 export CORE_PEER_ADDRESS="10.63.246.218:7051"
 export CHANNEL_NAME="mychannel"
 
- # joining mychannel with peer2
+ # joining mychannel with peer0org2
 
   kubectl exec $CLI_POD_ID -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer channel join -b mychannel.block -o $ORDERER_ADDR"
