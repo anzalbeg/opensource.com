@@ -1,17 +1,17 @@
 #!/bin/sh
 
-export VERSION=1.1.1
-export ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
+# export VERSION=1.1.1
+# export ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
 
-BIN="$ARCH-$VERSION"
-#SLEEP_TIMEOUT=0
+# BIN="$ARCH-$VERSION"
+# #SLEEP_TIMEOUT=0
 
-#if [ ! -d "bin"]; then
- echo "heelo bin"
-   curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
-#fi
+# #if [ ! -d "bin"]; then
+#  echo "heelo bin"
+#    curl https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/${BIN}/hyperledger-fabric-${BIN}.tar.gz | tar xz
+# #fi
 
-./bin/cryptogen generate --config=./crypto-config.yaml
+# ./bin/cryptogen generate --config=./crypto-config.yaml
 
 export FABRIC_CFG_PATH=$PWD
 
