@@ -11,6 +11,6 @@ export CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/pe
 export CORE_PEER_LOCALMSPID="Org1MSP"
 export CORE_PEER_ADDRESS="10.63.241.223:7051"
 export CHANNEL_NAME="mychannel"
-#instantiating chaincode
+#instantiating  chain code
 
 kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode upgrade -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -v 4.0 -c '{\"Args\":[\"init\",\" \"]}' -P \"OR ('Org1MSP.peer','Org2MSP.peer')\""
