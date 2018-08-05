@@ -14,5 +14,6 @@ export CORE_PEER_ADDRESS="10.63.241.223:7051"
 export CHANNEL_NAME="mychannel"
 # invoke 
 
-kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode invoke -o $ORDERER_ADDR -C $CHANNEL_NAME -n mycc -c '{\"Args\":[\"invoke\",\"a\",\"b\",\"50\"]}'"
-
+set -x
+kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode invoke -o $ORDERER_ADDR -C $CHANNEL_NAME -n supplychain -c '{\"Args\":[\"createShipment\",\"shipment01\",\"{\"objectType\": \"shipment\",\"shipmentID\": \"shipment01\",\"purchaseOrder\": {\"purchaseOrderID\": \"purchase01\", \"ref\": \"987667eye56728yx87q80j\", \"shipmentOrderedState\": \"deliverywaiting\", \"orderDate\": \"2018-06-05T17:00:00Z\" }, \"customer\": { \"customerID\": \"customerID01\" }, \"carrier\": { \"carrierID\": \"3rdPartyLogistic\" }, \"location\": { \"latitude\": \"48.8566\", \"longitude\": \"2.3522\", \"address\": \"paris\", \"dock\": \"ns\" }, \"expectedDepartureDate\": \"2018-06-05T17:00:00Z\", \"expectedArrivedDate\": \"2018-06-05T17:00:00Z\", \"realDepartureDate\": \"2018-06-05T17:00:00Z\", \"realArrivedDate\": \"2018-06-05T17:00:00Z\", \"shipmentOrderedState\": \"loaded\", \"dispute\": \"false\", \"reasonDispute\": \"na\" }\"]}'"
+set +x

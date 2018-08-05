@@ -13,7 +13,7 @@ export CORE_PEER_ADDRESS="10.63.241.223:7051"
 export CHANNEL_NAME="mychannel"
 # invoke 
 
-kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode query -C $CHANNEL_NAME -n mycc -c '{\"Args\":[\"query\",\"a\"]}'"
+kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode query -C $CHANNEL_NAME -n supplychain -c '{\"Args\":[\"readShipmentData\",\"shipment01\"]}'"
 
 
 #peer0org2
@@ -27,4 +27,4 @@ export CORE_PEER_LOCALMSPID="Org2MSP"
 export CORE_PEER_ADDRESS="10.63.245.74:7051"
 export CHANNEL_NAME="mychannel"
 
-kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode query -C $CHANNEL_NAME -n mycc -c '{\"Args\":[\"query\",\"a\"]}'"
+kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode query -C $CHANNEL_NAME -n supplychain -c '{\"Args\":[\"readShipmentData\",\"shipment01\"]}'"

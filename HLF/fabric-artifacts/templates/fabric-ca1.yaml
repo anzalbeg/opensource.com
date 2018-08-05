@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Release.Name }}-ca1
-  name: {{ .Release.Name }}-ca1
-  namespace: {{ .Values.namespace.org1namespace }}
+    service: test-ca1
+  name: test-ca1
+  namespace: org1namespace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: {{ .Release.Name }}-ca1
+      service: test-ca1
   template:
     metadata:
-      name: {{ .Release.Name }}-ca1
+      name: test-ca1
       labels:
-        service: {{ .Release.Name }}-ca1
-      namespace: {{ .Values.namespace.org1namespace }}
+        service: test-ca1
+      namespace: org1namespace
     spec:
       hostAliases:
-      - ip: "{{ .Values.fabricOrderer.addr }}"
+      - ip: 192.168.99.100
       hostnames:
-       - "orderer.{{ .Values.fabricOrderer.orgDomain }}"
+       - "orderer.example.com"
       containers:
       - command:
         - fabric-ca-server
@@ -40,13 +40,13 @@ spec:
         - name: CORE_LOGGING_LEVEL
           value: DEBUG
         image: {{ .Values.fabricCa1.image }}:{{ .Values.fabricCa1.tag }}
-        name: {{ .Release.Name }}-ca1
+        name: test-ca1
         ports:
         - containerPort: 7054
         volumeMounts:
         - mountPath: /etc/crypto-config
-          name: {{ .Release.Name }}-crypto-config
+          name: test-crypto-config
           readOnly: true
       volumes:
-      - name: {{ .Release.Name }}-crypto-config
+      - name: test-crypto-config
 {{ toYaml .Values.cryptoConfigMount | indent 8 }}
