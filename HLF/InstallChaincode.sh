@@ -14,7 +14,7 @@ export CORE_PEER_LOCALMSPID="Org1MSP"
 export CORE_PEER_ADDRESS="10.63.241.223:7051"
 export CHANNEL_NAME="mychannel"
 
-kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode install -n supplychain -v 5.0 -p $CHAINCODE_PATH"
+kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode install -n supplychain -v 2.0 -p $CHAINCODE_PATH"
 
 #setting up the peer0org2 env variables inside cli environment
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
@@ -27,4 +27,4 @@ export CORE_PEER_LOCALMSPID="Org2MSP"
 export CORE_PEER_ADDRESS="10.63.245.74:7051"
 export CHANNEL_NAME="mychannel"
 
-kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode install -n supplychain -v 5.0 -p $CHAINCODE_PATH"
+kubectl exec $CLI_POD_ID -n org1namespace -it -- bash -c "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID && CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH && CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS && peer chaincode install -n supplychain -v 2.0 -p $CHAINCODE_PATH"

@@ -1,0 +1,19 @@
+
+name: "supplyChain-org1"
+
+
+x-type: "hlfv1"
+description: "Smart Property Production Pilot - client definition for Org1"
+
+version: "2.0"
+
+client:
+  organization: org1
+
+  credentialStore:
+    path: "./fabric-client-kv-org1"
+
+    cryptoStore:
+      path: "/tmp/fabric-client-kv-org1"
+
+    wallet: wallet-name

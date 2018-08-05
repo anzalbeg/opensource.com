@@ -1,0 +1,16 @@
+{
+   "host":"AZUVMSGWINN002",
+   "port":"4000",
+   "jwt_expiretime": "36000",
+   "channelName":"mychannel1",
+   "CC_SRC_PATH":"../artifacts",
+   "eventWaitTime":"30000",
+   "admins":[
+    {
+        "usernameOrg1":"admin-org1",
+        "secretOrg1":"admin-org1pw",
+        "usernameOrg2":"admin-org2",
+        "secretOrg2":"admin-org2pw"
+     }
+   ]
+}
