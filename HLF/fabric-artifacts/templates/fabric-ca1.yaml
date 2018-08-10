@@ -17,10 +17,8 @@ spec:
         service: test-ca1
       namespace: org1namespace
     spec:
-      hostAliases:
-      - ip: 192.168.99.100
       hostnames:
-       - "orderer.example.com"
+       - "test-ca1"
       containers:
       - command:
         - fabric-ca-server
