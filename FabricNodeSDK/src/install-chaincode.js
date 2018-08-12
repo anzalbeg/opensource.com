@@ -1,18 +1,3 @@
-/**
- * Copyright 2017 IBM All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 'use strict';
 var path = require('path');
 var fs = require('fs');
@@ -30,7 +15,6 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 	try {
 		logger.info('Calling peers in organization "%s" to join the channel', org_name);
 
-		// first setup the client for this org
 		var client = await helper.getClientForOrg(org_name, username);
 		logger.debug('Successfully got the fabric client for the organization "%s"', org_name);
 
@@ -43,15 +27,9 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 			chaincodeType: chaincodeType
 		};
 		let results = await client.installChaincode(request);
-		// the returned object has both the endorsement results
-		// and the actual proposal, the proposal will be needed
-		// later when we send a transaction to the orederer
 		var proposalResponses = results[0];
 		var proposal = results[1];
 
-		// lets have a look at the responses to see if they are
-		// all good, if good they will also include signatures
-		// required to be committed
 		var all_good = true;
 		for (var i in proposalResponses) {
 			let one_good = false;
@@ -82,7 +60,6 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 	if (!error_message) {
 		let message = util.format('Successfully install chaincode');
 		logger.info(message);
-		// build a response to send back to the REST caller
 		let response = {
 			success: true,
 			message: message

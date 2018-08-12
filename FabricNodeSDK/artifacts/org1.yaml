@@ -3,9 +3,9 @@ name: "supplyChain-org1"
 
 
 x-type: "hlfv1"
-description: "Smart Property Production Pilot - client definition for Org1"
+description: "SupplyChain - client definition for Org1"
 
-version: "2.0"
+version: "1.0"
 
 client:
   organization: org1

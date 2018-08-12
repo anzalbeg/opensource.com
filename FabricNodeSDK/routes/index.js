@@ -10,7 +10,6 @@ var jwt = require('./expressJwt/jwt').jwt;
 var app = require('./expressJwt/jwt').app;
 var bearerToken = require('express-bearer-token');
 var util = require('util');
-//require('./expressJwt/jwt').router;
 
 var createUser = require('../controller/users.js');
 var createChannel = require('../controller/createChannel.js');
@@ -47,8 +46,6 @@ router.use(function(req, res, next) {
 			});
 			return;
 		} else {
-			// add the decoded user name and org name to the request object
-			// for the downstream code to use
 			req.username = decoded.username;
 			req.orgname = decoded.orgname;
 			logger.debug(util.format('Decoded from JWT token: username - %s, orgname - %s', decoded.username, decoded.orgname));
@@ -56,6 +53,13 @@ router.use(function(req, res, next) {
 		}
 	});
 });
+
+
+router.get('/test', async function(req, res) {
+	//get all post request payload keys
+	res.send("Success");
+});
+
 
 router.post('/users', async function(req, res) {
 	//get all post request payload keys

@@ -4,9 +4,9 @@ name: "supplyChain"
 x-type: "hlfv1"
 
 
-description: "Smart Property Production Pilot"
+description: "SupplyChain"
 
-version: "2.0"
+version: "1.0"
 
 
 channels:
@@ -37,7 +37,7 @@ organizations:
     peers:
       - peer0.org1.example.com
     certificateAuthorities:
-      - ca.org1.example.com
+      - test-ca1
     adminPrivateKey:
       path: artifacts/data/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/3e43eb0a2e47b1ed718c138da1041096aec88c058fc0f03b68f2d1775d3abc33_sk
     signedCert:
@@ -45,7 +45,7 @@ organizations:
 
 orderers:
   orderer.example.com:
-    url: grpcs://10.63.249.66:7050
+    url: grpc://10.63.249.66:7050
 
     grpcOptions:
       ssl-target-name-override: orderer.example.com
@@ -57,34 +57,34 @@ orderers:
 
 peers:
   peer0.org1.example.com:
-    url: grpcs://10.63.241.223:7051
-    eventUrl: grpcs://10.63.241.223:7053
+    url: grpc://10.63.241.223:7051
+    eventUrl: grpc://10.63.241.223:7053
     grpcOptions:
       ssl-target-name-override: peer0.org1.example.com
       grpc.http2.keepalive_time: 60000
     tlsCACerts:
-      path: artifacts/data/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+      path: artifacts/data/orgs/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
 
   peer0.org2.example.com:
-    url: grpcs://10.63.245.74:7051
-    eventUrl: grpcs://10.63.245.74:7053
+    url: grpc://10.63.245.74:7051
+    eventUrl: grpc://10.63.245.74:7053
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
       grpc.http2.keepalive_time: 60000
     tlsCACerts:
-      path: artifacts/data/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
+      path: artifacts/data/orgs/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
 
 
 certificateAuthorities:
-  ca.org1.example.com:
-    url: https://10.64.37.224:7054
+  test-ca1:
+    url: http://104.198.229.69:7054
     httpOptions:
       verify: false
     tlsCACerts:
-      path: artifacts/data/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+      path: artifacts/data/orgs/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
 
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
-    caName: ca.org1.example.com
+    caName: test-ca1
 

@@ -1,16 +1,14 @@
 {
-   "host":"AZUVMSGWINN002",
+   "host":"cs-6000-devshell-vm-002529f1-3d4a-4d8d-a48b-196bf2b98e4d",
    "port":"4000",
    "jwt_expiretime": "36000",
-   "channelName":"mychannel1",
+   "channelName":"mychannel",
    "CC_SRC_PATH":"../artifacts",
    "eventWaitTime":"30000",
    "admins":[
     {
-        "usernameOrg1":"admin-org1",
-        "secretOrg1":"admin-org1pw",
-        "usernameOrg2":"admin-org2",
-        "secretOrg2":"admin-org2pw"
+        "usernameOrg1":"admin",
+        "secretOrg1":"adminpw"
      }
    ]
 }

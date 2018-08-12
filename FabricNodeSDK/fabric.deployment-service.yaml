@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fabric-node-sdk
+  labels:
+    app: fabric-node-sdk
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fabric-node-sdk
+    spec:
+      containers:
+        - name: fabric-node-sdk
+          image: anzal/fabirc-node-sdk-v1:latest
+          env:
+            - name: APP_NAME
+              value: "fabric-node-sdk"
+            - name: PORT
+              value: "4000"
+          ports:
+            - containerPort: 4000
+              name: fabric-node-sdk

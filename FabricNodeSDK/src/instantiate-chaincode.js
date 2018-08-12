@@ -1,18 +1,3 @@
-/**
- * Copyright 2017 IBM All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 'use strict';
 var path = require('path');
 var fs = require('fs');
@@ -36,13 +21,8 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 			throw new Error(message);
 		}
 		var tx_id = client.newTransactionID(true); // Get an admin based transactionID
-		                                       // An admin based transactionID will
-		                                       // indicate that admin identity should
-		                                       // be used to sign the proposal request.
-		// will need the transaction ID string for the event registration later
 		var deployId = tx_id.getTransactionID();
 
-		// send proposal to endorser
 		var request = {
 			targets : peers,
 			chaincodeId: chaincodeName,
@@ -63,16 +43,8 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 		else{
 			results = await channel.sendUpgradeProposal(request, 60000); //instantiate takes much longer
 		}
-
-		// the returned object has both the endorsement results
-		// and the actual proposal, the proposal will be needed
-		// later when we send a transaction to the orderer
 		var proposalResponses = results[0];
 		var proposal = results[1];
-
-		// lets have a look at the responses to see if they are
-		// all good, if good they will also include signatures
-		// required to be committed
 		var all_good = true;
 		for (var i in proposalResponses) {
 			let one_good = false;
@@ -91,9 +63,6 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 				'Successfully sent Proposal and received ProposalResponse: Status - %s, message - "%s", metadata - "%s", endorsement signature: %s',
 				proposalResponses[0].response.status, proposalResponses[0].response.message,
 				proposalResponses[0].response.payload, proposalResponses[0].endorsement.signature));
-
-			// wait for the channel-based event hub to tell us that the
-			// instantiate transaction was committed on the peer
 			var promises = [];
 			let event_hubs = channel.getChannelEventHubsForOrg();
 			logger.debug('found %s eventhubs for this organization %s',event_hubs.length, org_name);
@@ -124,10 +93,6 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 						logger.error(err);
 						reject(err);
 					},
-						// the default for 'unregister' is true for transaction listeners
-						// so no real need to set here, however for 'disconnect'
-						// the default is false as most event hubs are long running
-						// in this use case we are using it only once
 						{unregister: true, disconnect: true}
 					);
 					eh.connect();
@@ -137,16 +102,10 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 
 			var orderer_request = {
 				txId: tx_id, // must include the transaction id so that the outbound
-				             // transaction to the orderer will be signed by the admin
-							 // id as was the proposal above, notice that transactionID
-							 // generated above was based on the admin id not the current
-							 // user assigned to the 'client' instance.
 				proposalResponses: proposalResponses,
 				proposal: proposal
 			};
 			var sendPromise = channel.sendTransaction(orderer_request);
-			// put the send to the orderer last so that the events get registered and
-			// are ready for the orderering and committing
 			promises.push(sendPromise);
 			let results = await Promise.all(promises);
 			logger.debug(util.format('------->>> R E S P O N S E : %j', results));
@@ -192,7 +151,6 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 			'Successfully upgrade chaincode in organization %s to the channel \'%s\'',
 			org_name, channelName);
 		logger.info(message);
-		// build a response to send back to the REST caller
 		let response = {
 			success: true,
 			message: message
