@@ -15,7 +15,6 @@ spec:
     targetPort: 7050
   selector:
     service: {{ .Release.Name }}-orderer
-    sessionAffinity: None
   type: NodePort
 status:
   loadBalancer: {}
