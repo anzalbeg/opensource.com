@@ -16,99 +16,21 @@ import (
 type SimpleChaincode struct {
 }
 
-type Organization struct {
-	ObjectType          string            `json:"objectType"`
-	OrganizationID      string            `json:"organizationID"`
-	Name                string            `json:"name"`
-}
-
-type ParticipantUser struct {
-	ObjectType          string            `json:"objectType"`
-	ParticipantID       string            `json:"participantID"`
-	Name                string            `json:"name"`  
-	Organization        Organization      `json:"organization"`
-	Role                Role            `json:"role"`
-}
-
-type Role int
-
-const (
-	customer Role = iota
-	seller
-	driver
-	Logistic argument
-	Logistic Manager
-)
-
-type Logistics struct {
-	ObjectType          string            `json:"objectType"`
-	LogisticsID         string            `json:"logisticsID"`
-	Contains   		  []Logistics         `json:"contains"`
-	ContainedBY       []Logistics         `json:"containedBY"`	
-	State               State             `json:"state"`
-	Type                string            `json:"type"`
-	Assignee            ParticipantUser   `json:"assignee"`
-	Owner               ParticipantUser   `json:"owner"`
-	CounterSignee       ParticipantUser   `json:"counterSignee"`
-	Location            Location          `json:"location"`
-	Size                float64           `json:"size"`
-	Weight              float64           `json:"weight"`
-	Price               float64           `json:"price"`	
-}
-
 type PurchaseOrder struct {
 	ObjectType         string             `json:"objectType"`
 	PurchaseOrderID    string             `json:"purchaseOrderID"`
-	Seller             ParticipantUser    `json:"seller"`
-	Buyer              ParticipantUser    `json:"buyer"`
-	ExpectedDelDate    time.Time          `json:"expectedDelDate"`
-	ShipTO             Location           `json:"shipTO"`
-	Amount             float64            `json:"amount"`
-	Product          []products           `json:"product"`
-	State              State              `json:"state"`
+	Ref                string             `json:"ref"`
+	OrderDate          time.Time          `json:"orderDate"`
+	PurchaseOrderState PurchaseOrderState `json:"purchaseOrderState"`
 }
 
-type LogisticsUnit struct {
-	ObjectType          string            `json:"objectType"`
-	LogisticsUnitID     string            `json:"logisticsUnitID"`
-	ParentID            string            `json:"parentID"`
-	ShipmentID          string            `json:"shipmentID"`
-	LogisticsState      State             `json:"state"`
-	Type                string            `json:"type"`
-	Assignee            ParticipantUser   `json:"assignee"`
-	CounterSignee       ParticipantUser   `json:"counterSignee"`
-	Location            Location          `json:"location"`
-	Size                float64           `json:"size"`
-	Weight              float64           `json:"weight"`
-	PurchaseOrderID     string            `json:"purchaseOrderID"` 
-	Quantity            int				  `json:"quantity"`          
-	Price               float64           `json:"price"`
-	DisputeReason		string            `json:"disputeReason"`
-	DisputeComment		string            `json:"disputeComment"`		
-}
-
-type Location struct {
-	ObjectType          string            `json:"objectType"`
-	LocationID          string            `json:"locationID"`
-	Street              string            `json:"street"`
-	DockLineNumber      string            `json:"dockLineNumber"`
-	PostalCode          string            `json:"postalCode"`
-	City				string			  `json:"city"`
-	Country             string            `json:"country"`
-}
-
-type State int
+type PurchaseOrderState int
 
 const (
-	Awaiting Validation State = iota
-	Validated
-	Prepared
-	Shipped
-	Delivered
-	Rejected
-	Paid
-	Pending
-	Awaiting Payment
+	ordered PurchaseOrderState = iota
+	pendingDelivery
+	received
+	cancelled
 )
 
 type Shipment struct {
@@ -146,6 +68,12 @@ type Carrier struct {
 	CarrierID string `json:"carrierID"`
 }
 
+type Location struct {
+	Latitude  string `json:"latitude"`
+	Longitude string `json:"longitude"`
+	Address   string `json:"address"`
+	Dock      string `json:"dock"`
+}
 
 // String returns the name of the state
 func (n PurchaseOrderState) String() string {
@@ -202,18 +130,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		return t.getShipmentByRange(stub, args)
 	} else if function == "transferShipment" { //change owner of a specific shipment
 		return t.transferShipment(stub, args)
-	}else if function == "createOrganization" { //create new organization
-		return t.createOrganization(stub, args)
-	}else if function == "createParticipantUser" {// create a participant within the organization
-		return t.createUser(stub, args)
-	}else if funciton == "assignSecurityRole" { // assign or update the rol of participant 
-		return t.assignSecurityRole(stub, args)
-	}else if function == "createLogisticUnit" { // create logisticunit 
-		return t.createLogisticUnit(stub, args)
-	}else if funciton == "packageLogistic" { // packaging the logistic unit 
-		return t.packageLogistic(stub, args)
 	}
-
 
 	fmt.Println("invoke did not find func: " + function) //error
 	return shim.Error("Received unknown function invocation")

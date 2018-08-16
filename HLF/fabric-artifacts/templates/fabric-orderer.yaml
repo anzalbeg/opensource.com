@@ -1,3 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: test-orderer
+  name: test-orderer-g746q
+  namespace: {{ .Values.namespace.orderernamespace }}
+spec:
+  externalTrafficPolicy: Cluster
+  clusterIP: 10.55.249.66
+  ports:
+  - nodePort: 31362
+    port: 7050
+    protocol: TCP
+    targetPort: 7050
+  selector:
+    service: {{ .Release.Name }}-orderer
+    sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

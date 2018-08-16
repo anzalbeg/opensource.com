@@ -75,7 +75,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: 10.63.241.223
+            - Host: 10.55.241.223
               Port: 7051
 
     - &Org2
@@ -92,7 +92,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: 10.63.245.74
+            - Host: 10.55.245.74
               Port: 7051
 
 ################################################################################
@@ -110,7 +110,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - 10.63.249.66:7050
+        - 10.55.249.66:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
