@@ -9,7 +9,7 @@ spec:
   externalTrafficPolicy: Cluster
   clusterIP: {{.Values.clusterIpRange}}.241.194
   ports:
-  - nodePort: 31876
+  - nodePort: 31877
     port: 7054
     protocol: TCP
     targetPort: 7054

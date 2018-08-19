@@ -1,12 +1,16 @@
 #!/bin/sh
 
 # setting up the peer1 env variables inside cli environment
+my_dir="$(dirname "$0")"
+. "$my_dir/parse_yaml.sh"
+
+eval $(parse_yaml /fabric-artifacts/values.yaml "config_")
 
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
 export CLI_POD_ID=`kubectl get pod -n org1namespace | grep cli | cut -f1 -d' '`
 #export ORDERER_POD_ID=`kubectl get pod | grep orderer | cut -f1 -d' '`
 #export ORDERER_ADDR=`kubectl get --output json  pods | jq '.items[] | select(.metadata.name=="'$ORDERER_POD_ID'")' | jq .status.podIP`
-export ORDERER_ADDR = {{.Values.clusterIpRange}}".249.66:7050"
+export ORDERER_ADDR = $config_clusterIpRange".249.66:7050"
 echo  "$ORDERER_ADDR"
 export ORG_DOMAIN="org1.example.com"
 export CHAINCODE_PATH=github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/chaincode/chaincode_example02/go
