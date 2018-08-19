@@ -1,6 +1,10 @@
 #!/bin/sh
 
 # setting up the peer0org1 env variables inside cli environment
+my_dir="$(dirname "$0")"
+. "$my_dir/parse_yaml.sh"
+
+eval $(parse_yaml fabric-artifacts/values.yaml "config_")
 
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
 export ANCHOR_PEER=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/Org1MSPanchors.tx
