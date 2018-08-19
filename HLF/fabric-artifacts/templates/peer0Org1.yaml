@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: test-peer0org1  
-  name: test-peer0-xyz
+    service: {{ .Release.Name }}-peer0org1  
+  name: {{ .Release.Name }}-peer0-xyz
   namespace: {{ .Values.namespace.org1namespace }}
 spec:
   clusterIP: {{.Values.clusterIpRange}}.241.223
@@ -20,7 +20,7 @@ spec:
     protocol: TCP
     targetPort: 7053
   selector:
-    service: test-peer0org1
+    service: {{ .Release.Name }}-peer0org1
   sessionAffinity: None
   type: NodePort
 status:
