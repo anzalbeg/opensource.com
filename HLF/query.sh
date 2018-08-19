@@ -1,7 +1,10 @@
 #!/bin/sh
 
 # setting up the peer1 env variables inside cli environment
+my_dir="$(dirname "$0")"
+. "$my_dir/parse_yaml.sh"
 
+eval $(parse_yaml fabric-artifacts/values.yaml "config_")
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
 export CLI_POD_ID=`kubectl get pod -n org1namespace | grep cli | cut -f1 -d' '`
 export ORDERER_ADDR=$config_clusterIpRange".249.66:7050"
