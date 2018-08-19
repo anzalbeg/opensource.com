@@ -7,7 +7,7 @@ metadata:
   namespace: {{ .Values.namespace.orderernamespace }}
 spec:
   externalTrafficPolicy: Cluster
-  clusterIP: 10.55.249.66
+  clusterIP: {{.Values.clusterIpRange}}.249.66
   ports:
   - nodePort: 31362
     port: 7050

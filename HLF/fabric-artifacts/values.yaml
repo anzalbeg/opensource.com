@@ -68,6 +68,8 @@ namespace:
   org1namespace: org1namespace
   org2namespace: org2namespace
   orderernamespace: orderernamespace
+
+clusterIpRange: 10.55
   
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

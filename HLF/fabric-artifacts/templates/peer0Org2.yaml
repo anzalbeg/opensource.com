@@ -6,7 +6,7 @@ metadata:
   name: test-peer0-abc
   namespace: {{ .Values.namespace.org2namespace }}
 spec:
-  clusterIP: 10.55.245.74
+  clusterIP: {{.Values.clusterIpRange}}.245.74
   externalTrafficPolicy: Cluster
   ports:
   - name: 7051-to-7051-tcp

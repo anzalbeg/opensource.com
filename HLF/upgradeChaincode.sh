@@ -4,12 +4,12 @@
 
 export GENESIS_BLOCK=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/channel-artifacts/orderer-channel.tx
 export CLI_POD_ID=`kubectl get pod -n org1namespace | grep cli | cut -f1 -d' '`
-export ORDERER_ADDR="10.55.249.66:7050"
+export ORDERER_ADDR={{.Values.clusterIpRange}}".249.66:7050"
 export ORG_DOMAIN="org1.example.com"
 export CHAINCODE_PATH=github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/chaincode/chaincode_example02/go
 export CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/crypto-config/opensource.com/HLF/crypto-config/peerOrganizations/$ORG_DOMAIN/users/Admin@$ORG_DOMAIN/msp"
 export CORE_PEER_LOCALMSPID="Org1MSP"
-export CORE_PEER_ADDRESS="10.55.241.223:7051"
+export CORE_PEER_ADDRESS={{.Values.clusterIpRange}}".241.223:7051"
 export CHANNEL_NAME="mychannel"
 #instantiating  chain code
 

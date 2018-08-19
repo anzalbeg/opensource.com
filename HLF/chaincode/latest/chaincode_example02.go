@@ -12,8 +12,8 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
 
-// SimpleChaincode example simple Chaincode implementation
-type SimpleChaincode struct {
+// SupplyChainChaincode example simple Chaincode implementation
+type SupplyChainChaincode struct {
 }
 
 type Organization struct {
@@ -27,7 +27,7 @@ type ParticipantUser struct {
 	ParticipantID       string            `json:"participantID"`
 	Name                string            `json:"name"`  
 	Organization        Organization      `json:"organization"`
-	Role                Role            `json:"role"`
+	Role                Role              `json:"role"`
 }
 
 type Role int
@@ -174,7 +174,7 @@ func (n ShipmentOrderState) String() string {
 // Main
 // ===================================================================================
 func main() {
-	err := shim.Start(new(SimpleChaincode))
+	err := shim.Start(new(SupplyChainChaincode))
 	if err != nil {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
@@ -182,13 +182,13 @@ func main() {
 
 // Init initializes chaincode
 // ===========================
-func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *SupplyChainChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Success(nil)
 }
 
 // Invoke - Our entry point for Invocations
 // ========================================
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *SupplyChainChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	function, args := stub.GetFunctionAndParameters()
 	fmt.Println("invoke is running " + function)
 
@@ -206,11 +206,11 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		return t.createOrganization(stub, args)
 	}else if function == "createParticipantUser" {// create a participant within the organization
 		return t.createUser(stub, args)
-	}else if funciton == "assignSecurityRole" { // assign or update the rol of participant 
+	}else if function == "assignSecurityRole" { // assign or update the rol of participant 
 		return t.assignSecurityRole(stub, args)
 	}else if function == "createLogisticUnit" { // create logisticunit 
 		return t.createLogisticUnit(stub, args)
-	}else if funciton == "packageLogistic" { // packaging the logistic unit 
+	}else if function == "packageLogistic" { // packaging the logistic unit 
 		return t.packageLogistic(stub, args)
 	}
 
@@ -222,7 +222,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 // ============================================================
 // initContainer - create a new shipment, store into chaincode state
 // ============================================================
-func (t *SimpleChaincode) createShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *SupplyChainChaincode) createShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var err error
 
 	fmt.Println(len(args))
@@ -282,10 +282,72 @@ func (t *SimpleChaincode) createShipment(stub shim.ChaincodeStubInterface, args 
 	return shim.Success(nil)
 }
 
+
+func (t *SupplyChainChaincode) createOrganization(stub shim.ChaincodeStubInterface, args[]string) pb.Response {
+	var err error
+
+	fmt.Println(len(args))
+	// ==== Input sanitation ====
+	fmt.Println("- start init shipment")
+	if len(args[0]) <= 0 {
+		return shim.Error("1st argument must be a non-empty string")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd argument must be a non-empty string")
+	}
+
+	shipmentID := args[0]
+	payload := args[1]
+
+	fmt.Println("shipmentID--" + shipmentID)
+	fmt.Println("Payload--" + payload)
+
+	// ==== Check if shipmentID already exists ====
+	shipmentAsBytes, err := stub.GetState(shipmentID)
+	if err != nil {
+		return shim.Error("Failed to get shipmentID: " + err.Error())
+	} else if shipmentAsBytes != nil {
+		fmt.Println("This shipmentID already exists: " + shipmentID)
+		return shim.Error("This shipmentID already exists: " + shipmentID)
+	}
+	// ==== Create shipment object and shipment to JSON ====
+	var shipmentVariable Shipment
+	if err := json.Unmarshal([]byte(payload), &shipmentVariable); err != nil {
+		log.Fatal(err)
+	}
+	purchaseOrderID := shipmentVariable.PurchaseOrder.PurchaseOrderID
+	_tempPurchase := PurchaseOrder{
+		ObjectType:         "purchaseOrder",
+		PurchaseOrderID:    shipmentVariable.PurchaseOrder.PurchaseOrderID,
+		Ref:                shipmentVariable.PurchaseOrder.Ref,
+		OrderDate:          shipmentVariable.PurchaseOrder.OrderDate,
+		PurchaseOrderState: shipmentVariable.PurchaseOrder.PurchaseOrderState,
+	}
+
+	_tempPurchaseJsonAsBytes, err := json.Marshal(_tempPurchase)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Println(string(_tempPurchaseJsonAsBytes))
+	_tempShipmentJsonAsBytes, err1 := json.Marshal(payload)
+	// === Save shipment to state ===
+	err = stub.PutState(purchaseOrderID, []byte(_tempPurchaseJsonAsBytes))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	err1 = stub.PutState(shipmentID, []byte(_tempShipmentJsonAsBytes))
+	if err1 != nil {
+		return shim.Error(err1.Error())
+	}
+	fmt.Println(" Succussfully created shipment details")
+	return shim.Success(nil)
+
+}
+
 // ===============================================
 // readShipmentData - read a shipment from chaincode state
 // ===============================================
-func (t *SimpleChaincode) readShipmentData(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *SupplyChainChaincode) readShipmentData(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var shipmentID, shipmentDataJsonResp string
 	var err error
 
@@ -312,7 +374,7 @@ func (t *SimpleChaincode) readShipmentData(stub shim.ChaincodeStubInterface, arg
 // // ===========================================================
 // // transfer a shipment by setting a new owner name on the shipment
 // // ===========================================================
-func (t *SimpleChaincode) transferShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *SupplyChainChaincode) transferShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) < 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
@@ -387,7 +449,7 @@ func (t *SimpleChaincode) transferShipment(stub shim.ChaincodeStubInterface, arg
 	return shim.Success(nil)
 }
 
-func (t *SimpleChaincode) getShipmentByRange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *SupplyChainChaincode) getShipmentByRange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) < 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
@@ -434,7 +496,7 @@ func (t *SimpleChaincode) getShipmentByRange(stub shim.ChaincodeStubInterface, a
 	return shim.Success(buffer.Bytes())
 }
 
-func (t *SimpleChaincode) getHistoryForShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *SupplyChainChaincode) getHistoryForShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) < 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
