@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: test-orderer
-  name: test-orderer-g746q
+    service: {{ .Release.Name }}-orderer
+  name: {{ .Release.Name }}-orderer-g746q
   namespace: {{ .Values.namespace.orderernamespace }}
 spec:
   externalTrafficPolicy: Cluster
