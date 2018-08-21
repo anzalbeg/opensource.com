@@ -5,6 +5,7 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"log"
 	"strconv"
 	"time"
@@ -141,6 +142,12 @@ type Carrier struct {
 	CarrierID string `json:"carrierID"`
 }
 
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
+
 // String returns the name of the state
 func (n PurchaseOrderState) String() string {
 	names := [...]string{"AwaitingValidation", "Validated", "Prepared", "Shipped", "Delivered", "Rejected", "Paid", "Pending", "AwaitingPayment"}
@@ -273,17 +280,13 @@ func (t *SupplyChainChaincode) getOrganizationbyID(stub shim.ChaincodeStubInterf
 func (t *SupplyChainChaincode) createOrganization(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var err error
 	var tosend, organizationID string
-	var uuid [16]byte
-	fmt.Println("- start creating organization")
-
-	_payloadBytes, _ := json.Marshal(args[0])
-
-	uuid = md5.Sum(_payloadBytes)
-
-	organizationID = string(uuid[:])
-
-	fmt.Printf("uuid value is : %s\n", uuid)
-	fmt.Println("- start creating transaction")
+	//var uuid [16]byte
+	var org Organization
+	if err := json.Unmarshal([]byte(args[0])), &org); err != nil {
+		log.Fatal(err)
+	}
+	org.OrganizationID=hash(org.Name)
+	organizationID=fmt.Sprint(org.OrganizationID)
 	err = stub.PutState(organizationID, []byte(args[0]))
 	if err != nil {
 		return shim.Error(err.Error())
